@@ -1,8 +1,7 @@
 NAME = fixed
 
 CXX = c++ -fsanitize=address -ggdb
-# CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Iincludes -std=c++98
-# CXXFLAGS = 
+CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Iincludes -std=c++98
 OBJS_FOLDER = objs
 VPATH = srcs/
 RM = rm -rf

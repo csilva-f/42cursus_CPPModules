@@ -1,4 +1,4 @@
-NAME = fixed
+NAME = clapTrap
 
 CXX = c++ -fsanitize=address -ggdb
 CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Iincludes -std=c++98
@@ -6,7 +6,7 @@ OBJS_FOLDER = objs
 VPATH = srcs/
 RM = rm -rf
 
-SRCS =	main.cpp Fixed.cpp
+SRCS =	main.cpp ClapTrap.cpp
 OBJS = ${SRCS:%.cpp=${OBJS_FOLDER}/%.o}
 
 ${NAME}:	${OBJS_FOLDER} ${OBJS}

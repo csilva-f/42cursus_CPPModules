@@ -1,12 +1,12 @@
-NAME = fixed
+NAME = DiamondTrap
 
 CXX = c++ -fsanitize=address -ggdb
-CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Iincludes -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -Iincludes -std=c++98 -pedantic
 OBJS_FOLDER = objs
 VPATH = srcs/
 RM = rm -rf
 
-SRCS =	main.cpp Fixed.cpp
+SRCS =	main.cpp DiamondTrap.cpp FragTrap.cpp ScavTrap.cpp ClapTrap.cpp
 OBJS = ${SRCS:%.cpp=${OBJS_FOLDER}/%.o}
 
 ${NAME}:	${OBJS_FOLDER} ${OBJS}
