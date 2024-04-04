@@ -1,26 +1,24 @@
-#ifndef AMATERIA_HPP
-#define AMATERIA_HPP
+#pragma once
 
 #include <iostream>
+#include <string>
+#include "ICharacter.hpp"
 
-#pragma once
 class ICharacter;
 
 class AMateria
 {
-	protected:
-		std::string type;
+protected:
+    std::string _type;
 
-		AMateria(std::string const &type);
-		AMateria(AMateria const &copy);
-	public:
-		virtual ~AMateria(void);
+public:
+    AMateria();
+    AMateria(std::string const &type);
+    AMATERIA(const AMateria& other);
+	~A
 
-		AMateria const &operator=(AMateria const &copy);
+    std::string const   &getType() const; //Returns the materia type
 
-		std::string const & getType() const; //Returns the materia type
-		virtual AMateria* clone() const = 0;
-		virtual void use(ICharacter& target) = 0;
+    virtual AMateria*   clone() const = 0;
+    virtual void        use(ICharacter& target);
 };
-
-#endif

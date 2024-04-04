@@ -1,32 +1,26 @@
 #include "Form.hpp"
 
-Form::Form(): _name("default"), _signed(0), _gradeToSign(150), _gradeToExecute(150)
+Form::Form(): _signed(false), _gsign(150), _gexec(150)
 {
 	std::cout << "Form default constructor called." << std::endl;
 }
 
-Form::Form(const std::string name, const ssize_t gradeToSign, const ssize_t gradeToExecute): _name(name), _signed(0), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
+Form::Form(const std::string name, const int sign, const int exec): _name(name), _signed(false), _gsign(sign), _gexec(exec)
 {
-	std::cout << "Form constructor with name " << name << " called with a Grade to Sign of " << gradeToSign << " and a Grade to Execute of " << gradeToExecute << "." << std::endl;
-	try
-	{
-		if (gradeToSign > 150 || gradeToExecute > 150)
-			throw (Form::GradeTooLowException());
-		else if (gradeToSign < 1 || gradeToExecute < 1)
-			throw (Form::GradeTooHighException());
-	}
-	catch (std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	if (sign < 1 || exec < 1)
+		throw Form::GradeTooHighException();
+	else if (sign > 150 || exec > 150)
+		throw Form::GradeTooLowException();
+	else
+		std::cout << "Form constructor with name " << name << ", " << sign << " as the required grade to sign and " << exec << " as the required grade to execute called." << std::endl;
 }
 
-Form::Form(const Form& other): _name(other._name), _signed(other._signed), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute)
+Form::Form(const Form& other): _name(other._name), _signed(other._signed), _gsign(other._gsign), _gexec(other._gexec)
 {
 	std::cout << "Form copy constructor called." << std::endl;
 }
 
-Form	&Form::operator=(const Form &other)
+Form	&Form::operator=(const Form& other)
 {
 	std::cout << "Form copy assignment operator called." << std::endl;
 	if (this != &other)
@@ -39,65 +33,58 @@ Form::~Form()
 	std::cout << "Form destructor called." << std::endl;
 }
 
-std::string	Form::getName() const
+std::string	Form::getFormName() const
 {
 	return this->_name;
 }
 
-bool	Form::getSigned() const
+bool		Form::getFormSign() const
 {
 	return this->_signed;
 }
 
-ssize_t	Form::getGradeSign() const
+int			Form::getFormGSign() const
 {
-	return this->_gradeToSign;
+	return this->_gsign;
 }
 
-ssize_t	Form::getGradeExecute() const
+int			Form::getFormGExec() const
 {
-	return this->_gradeToExecute;
+	return this->_gexec;
 }
 
-void	Form::beSigned(const Bureaucrat &other)
-{
-	try 
-	{
-		if (other.getGrade() > this->getGradeSign())
-			throw (Form::GradeTooLowException());
-		else if (this->_signed == true)
-			std::cout << other.getName() << " couldn't sign " << this->getName() << " because it was already signed." << std::endl;
-		else
-		{
-			this->_signed = true;
-			std::cout << other.getName() << " signed " << this->getName();
-		}
-	}
-	catch (std::exception & e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
-}
-
-void	checkGrade(const ssize_t grade)
+void		Form::beSigned(const Bureaucrat& bureau)
 {
 	try
 	{
-		if (grade < 1)
-			throw Form::GradeTooHighException();
-		else if (grade > 150)
-			throw Form::GradeTooLowException();
-	} 
-	catch (std::exception & e)
-	{
-		std::cerr << "An error occurred: " << e.what() << std::endl;	
+		if (bureau.getGrade() > this->getFormGSign())
+			throw Bureaucrat::GradeTooLowException();
+		else
+		{
+			this->_signed = true;
+			std::cout << bureau.getName() << " signed " << this->getFormName() << "." << std::endl;
+		}
 	}
+	catch (std::exception &e)
+	{
+		std::cerr << "Error!" << e.what() << std::endl;
+	}
+}
+
+const char	*Form::GradeTooLowException::what(void) const throw()
+{
+	return ("Form grade too low!");
+}
+
+const char	*Form::GradeTooHighException::what(void) const throw()
+{
+	return ("Form grade too high!");
 }
 
 std::ostream	&operator<<(std::ostream& os, const Form& other)
 {
-	os << "Form named " << other.getName() << ":\n\tSign Grade:\t" << other.getGradeSign();
-	os << "\n\tExecution Grade:\t" << other.getGradeExecute();
-	os << "\n\tIs signed:\t" << other.getSigned() << std::endl;
-	return (os);
+	os << other.getFormName() << ", form with grade to sign " << other.getFormGSign();
+	os << " and grade to execute " << other.getFormGExec() << ". Is Signed? ";
+	os << other.getFormSign() << std::endl;
+	return(os);
 }

@@ -1,7 +1,7 @@
 NAME = Bureaucrat
 
 CXX = c++ -fsanitize=address -ggdb
-CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -Iincludes -std=c++98 -pedantic
+CXXFLAGS = -Wall -Wextra -Werror -Wshadow -Iincludes -std=c++98 -pedantic
 OBJS_FOLDER = objs
 VPATH = srcs/
 RM = rm -rf
@@ -16,7 +16,7 @@ ${OBJS_FOLDER}:
 			mkdir -p objs
 
 ${OBJS_FOLDER}/%.o: %.cpp
-			$(CXX) $(CXXFLAGS) -c $< -o $@ 
+			$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 			${RM} ${OBJS_FOLDER}
