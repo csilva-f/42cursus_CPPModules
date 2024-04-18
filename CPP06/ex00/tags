@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/csilva-f/Desktop/42cursus_CPPModules/CPP06/ex00/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+${NAME}	Makefile	/^${NAME}:	${OBJS_FOLDER} ${OBJS}$/;"	t
+${OBJS_FOLDER}	Makefile	/^${OBJS_FOLDER}:$/;"	t
+${OBJS_FOLDER}/%.o	Makefile	/^${OBJS_FOLDER}\/%.o: %.cpp$/;"	t
+CXX	Makefile	/^CXX = c++ -fsanitize=address -ggdb$/;"	m
+NAME	Makefile	/^NAME = Conversor$/;"	m
+OBJS	Makefile	/^OBJS = ${SRCS:%.cpp=${OBJS_FOLDER}\/%.o}$/;"	m
+OBJS_FOLDER	Makefile	/^OBJS_FOLDER = objs$/;"	m
+RM	Makefile	/^RM = rm -rf$/;"	m
+SRCS	Makefile	/^SRCS =	main.cpp ScalarConverter.cpp$/;"	m
+ScalarConverter	ScalarConverter.cpp	/^ScalarConverter::ScalarConverter() {}$/;"	f	class:ScalarConverter
+ScalarConverter	ScalarConverter.cpp	/^ScalarConverter::ScalarConverter(const ScalarConverter& other)$/;"	f	class:ScalarConverter
+ScalarConverter	ScalarConverter.hpp	/^class ScalarConverter$/;"	c
+VPATH	Makefile	/^VPATH = srcs\/$/;"	m
+all	Makefile	/^all : 		${NAME}$/;"	t
+clean	Makefile	/^clean:$/;"	t
+convert	ScalarConverter.cpp	/^static void	ScalarConverter::convert(const std::string str)$/;"	f	class:ScalarConverter	typeref:typename:void	file:
+fclean	Makefile	/^fclean: 	clean$/;"	t
+isChar	ScalarConverter.cpp	/^bool	ScalarConverter::isChar(const std::string &str)$/;"	f	class:ScalarConverter	typeref:typename:bool
+isPseudo	ScalarConverter.cpp	/^bool	ScalarConverter::isPseudo(const std::string &str)$/;"	f	class:ScalarConverter	typeref:typename:bool
+main	main.cpp	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+operator =	ScalarConverter.cpp	/^ScalarConverter	&ScalarConverter::operator=(const ScalarConverter& other)$/;"	f	class:ScalarConverter	typeref:typename:ScalarConverter &
+re	Makefile	/^re: 		fclean all$/;"	t
+~ScalarConverter	ScalarConverter.cpp	/^ScalarConverter::~ScalarConverter() {}$/;"	f	class:ScalarConverter
