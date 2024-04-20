@@ -1,8 +1,4 @@
 #include "ScalarConverter.hpp"
-#include <cstdlib>
-#include <sstream>
-#include <string>
-#define STRING(Value) #Value
 
 ScalarConverter::ScalarConverter() {}
 
@@ -21,18 +17,20 @@ ScalarConverter::~ScalarConverter() {}
 
 int	ScalarConverter::checkInput(const std::string &str)
 {
-	if (str.find('-', 1) != std::string::npos)
+	if (str.find('-', 1) != std::string::npos || str.find('+', 1) != std::string::npos)
 		return 1;
-	else if ((str.find('f') != std::string::npos || str.find('F') != std::string::npos) && (str[str.length() - 1] != 'f' && str[str.length() - 1] != 'F'))
+	else if ((str.find('f') != std::string::npos || str.find('F') != std::string::npos) &&
+			(str[str.length() - 1] != 'f' && str[str.length() - 1] != 'F'))
 		return 2;
 	else if (str.find('.', str.find('.') + 1) != std::string::npos)
 		return 3;
-	
+
 	int	f1 = 0;
 	int	f2 = 0;
 	for (int i = 0; i < (int)str.size(); i++)
 	{
-		if ((str[i] >= '0' && str[i] <= '9') || str[i] == '-' || str[i] == '.' || str[i] == 'f' || str[i] == 'F')
+		if ((str[i] >= '0' && str[i] <= '9') || str[i] == '-' || str[i] == '+' \
+			|| str[i] == '.' || str[i] == 'f' || str[i] == 'F')
 			f1 = 1;
 		else if (isprint(str[i]) && (str[i] < '0' || str[i] > '9'))
 			f2 = 1;
@@ -42,41 +40,115 @@ int	ScalarConverter::checkInput(const std::string &str)
 	return 0;
 }
 
-void	ScalarConverter::convertFloat(const std::string &str)
+void	ScalarConverter::convertFloatOrDouble(const std::string &str)
 {
 	std::istringstream	iss(str);
-	
+
 	iss.str(str);
-	float	f = atof(iss.str().c_str());
-	std::cout << "float: ";
+	char	*p;
+	double	n = strtod(str.c_str(), &p);
 	if (!iss.fail())
 	{
-		if (f - int(f) == 0)
-			std::cout << f << ".0f\n";
+		if (n - static_cast<int>(n) == 0)
+		{
+			if (isprint(static_cast<char>(n)))
+				std::cout << "char: '" << static_cast<char>(n) << "'\n";
+			else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
+				std::cout << "char: impossible\n";
+			else
+				std::cout << "char: Non displayable\n";
+			if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+				std::cout << "int: impossible\n";
+			else
+				std::cout << "int: " << static_cast<int>(n) << "\n";
+			if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
+				std::cout << "float: impossible\n";
+			else
+				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
+			if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
+				std::cout << "double: impossible\n";
+			else
+				std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
+		}
 		else
-			std::cout << f << "f\n";
+		{
+			if (isprint(static_cast<char>(n)))
+				std::cout << "char: '" << static_cast<char>(n) << "'\n";
+			else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
+				std::cout << "char: impossible\n";
+			else
+				std::cout << "char: Non displayable\n";
+			if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+				std::cout << "int: impossible\n";
+			else
+				std::cout << "int: " << static_cast<int>(n) << "\n";
+			if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
+				std::cout << "float: impossible\n";
+			else
+				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
+			if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
+				std::cout << "double: impossible\n";
+			else
+				std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
+		}
 	}
 	else
-		std::cout << f << "impossible\n";
+	{
+		std::cout << "char: impossible\n";
+		std::cout << "int: impossible\n";
+		std::cout << "double: impossible\n";
+		std::cout << "float: impossible\n";
+	}
 }
 
-void	ScalarConverter::convertDouble(const std::string &str)
+void	ScalarConverter::convertInt(const std::string &str)
 {
-	std::istringstream	iss(str);
-
-	iss.str(str);
-	double	d = strtod(str, NULL);
-	std::cout << "double: ";
-	if (iss.fail())
-		std::cout << d << std::endl;
+	char	*p;
+	double	n = strtod(str.c_str(), &p);
+	if (isprint(static_cast<char>(n)) && n > 0)
+		std::cout << "char: '" << static_cast<char>(n) << "'\n";
+	else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
+		std::cout << "char: impossible\n";
 	else
-		std::cout << "impossible\n";
+		std::cout << "char: Non displayable\n";
+	if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+		std::cout << "int: impossible\n";
+	else
+		std::cout << "int: " << static_cast<int>(n) << "\n";
+	if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
+		std::cout << "float: impossible\n";
+	else
+		std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
+	if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
+		std::cout << "double: impossible\n";
+	else
+		std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
 }
+
+void	ScalarConverter::convertChar(const std::string &str)
+{
+	if (isprint(static_cast<char>(str[0])))
+		std::cout << "char: '" << static_cast<char>(str[0]) << "'\n";
+	else
+		std::cout << "char: Non displayable\n";
+	if (static_cast<int>(str[0]) > std::numeric_limits<int>::max() ||
+		static_cast<int>(str[0]) < std::numeric_limits<int>::min())
+		std::cout << "int: impossible\n";
+	else
+		std::cout << "int: " << static_cast<int>(str[0]) << "\n";
+	if (str[0] > std::numeric_limits<float>::max() || str[0] < -std::numeric_limits<float>::max())
+		std::cout << "float: impossible\n";
+	else
+		std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(str[0]) << "f\n";
+	if (str[0] > std::numeric_limits<double>::max() || str[0] < -std::numeric_limits<double>::max())
+		std::cout << "double: impossible\n";
+	else
+		std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(str[0]) << "\n";
+}
+
 void	ScalarConverter::convert(const std::string &str)
 {
 	std::istringstream	iss(str);
-	//char				c;
-	//int				i;
 
 	if (isPseudo(str))
 	{
@@ -96,72 +168,23 @@ void	ScalarConverter::convert(const std::string &str)
 		}
 	}
 	else if (checkInput(str))
-	{
-		std::cout << "codigo: " << checkInput(str) << "\n";
 		std::cout << "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible\n";
-	}
 	else if (isNumber(str))
 	{
 		if (isFloatOrDouble(str))
-		{
-			if (str.find('f') != std::string::npos || str.find('F') != std::string::npos)
-				return convertFloat(str);
-			else
-				return convertDouble(str);
-		}
-	/*	else
-		{
-
-		}*/
-	}
-	else 
-		return ;
-	/*iss >> c;
-	std::cout << "char: '";
-	if (!iss.fail())
-	{
-		if (isChar(str))
-			std::cout << c << "'"<< std::endl;
+			return convertFloatOrDouble(str);
 		else
-			std::cout << "not displayable" << std::endl;
+			return convertInt(str);
 	}
+	else if (isChar(str))
+		return convertChar(str);
 	else
-		std::cout << "non displayable" << std::endl;
-
-	iss.clear();
-	iss.str(str);
-	iss >> i;
-	std::cout << "int: ";
-	if (!iss.fail())
-		std::cout << i << std::endl;
-	else
-		std::cout << "impossible" << std::endl;
-
-	iss.clear();
-	iss.str(str);
-	// iss >> f;
-	std::string aux;
-	f = atof(iss.str().c_str());
-	// aux = (std::stringstream() << f).str();
-	std::cout << "float: ";
-	if (!iss.fail())
 	{
-		if (f - int(f) == 0)
-			std::cout << f<< ".0f\n";
-		else
-			std::cout << f<< "f\n";
+		std::cout << "char: impossible\n";
+		std::cout << "int: impossible\n";
+		std::cout << "double: impossible\n";
+		std::cout << "float: impossible\n";
 	}
-	else
-		std::cout << "impossible" << std::endl;
-
-	iss.clear();
-	iss.str(str);
-	iss >> d;
-	std::cout << "double: ";
-	if (!iss.fail())
-		std::cout << d << std::endl;
-	else
-		std::cout << "impossible" << std::endl;*/
 }
 
 bool	ScalarConverter::isChar(const std::string &str)
@@ -181,5 +204,6 @@ bool	ScalarConverter::isPseudo(const std::string &str)
 
 bool	ScalarConverter::isNumber(const std::string &str)
 {
-	return (((str[0] >= '0' && str[0] <= '9') || (str[0] == '-' && str[1] && str[1] >= '0' && str[1] <= '9')) && str.find('-', 1) == std::string::npos);
+	return (((str[0] >= '0' && str[0] <= '9') || ((str[0] == '-' || str[0] == '+') && str[1] &&
+	str[1] >= '0' && str[1] <= '9')) && str.find('-', 1) == std::string::npos && str.find('+', 1) == std::string::npos);
 }
