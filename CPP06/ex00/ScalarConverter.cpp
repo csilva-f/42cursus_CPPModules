@@ -49,48 +49,24 @@ void	ScalarConverter::convertFloatOrDouble(const std::string &str)
 	double	n = strtod(str.c_str(), &p);
 	if (!iss.fail())
 	{
-		if (n - static_cast<int>(n) == 0)
-		{
-			if (isprint(static_cast<char>(n)))
-				std::cout << "char: '" << static_cast<char>(n) << "'\n";
-			else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
-				std::cout << "char: impossible\n";
-			else
-				std::cout << "char: Non displayable\n";
-			if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
-				std::cout << "int: impossible\n";
-			else
-				std::cout << "int: " << static_cast<int>(n) << "\n";
-			if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
-				std::cout << "float: impossible\n";
-			else
-				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
-			if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
-				std::cout << "double: impossible\n";
-			else
-				std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
-		}
+		if (isprint(static_cast<char>(n)))
+			std::cout << "char: '" << static_cast<char>(n) << "'\n";
+		else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
+			std::cout << "char: impossible\n";
 		else
-		{
-			if (isprint(static_cast<char>(n)))
-				std::cout << "char: '" << static_cast<char>(n) << "'\n";
-			else if (static_cast<int>(n) < 0 || static_cast<int>(n) > 127)
-				std::cout << "char: impossible\n";
-			else
-				std::cout << "char: Non displayable\n";
-			if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
-				std::cout << "int: impossible\n";
-			else
-				std::cout << "int: " << static_cast<int>(n) << "\n";
-			if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
-				std::cout << "float: impossible\n";
-			else
-				std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
-			if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
-				std::cout << "double: impossible\n";
-			else
-				std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
-		}
+			std::cout << "char: Non displayable\n";
+		if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+			std::cout << "int: impossible\n";
+		else
+			std::cout << "int: " << static_cast<int>(n) << "\n";
+		if (n > std::numeric_limits<float>::max() || n < -std::numeric_limits<float>::max())
+			std::cout << "float: impossible\n";
+		else
+			std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(n) << "f\n";
+		if (n > std::numeric_limits<double>::max() || n < -std::numeric_limits<double>::max())
+			std::cout << "double: impossible\n";
+		else
+			std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(n) << "\n";
 	}
 	else
 	{

@@ -1,4 +1,4 @@
-NAME = Ftemplates
+NAME = Array
 
 CXX = c++ -fsanitize=address -ggdb
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
