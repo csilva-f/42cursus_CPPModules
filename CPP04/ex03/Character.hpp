@@ -6,8 +6,16 @@
 class Character: public ICharacter
 {
 private:
-	AMateria*	inv[4];
+	std::string		_name;
+	AMateria*		_inv[4];
+	AMateria*		_uinv[1000];
 public:
 	Character();
+	Character(std::string const& name);
+	Character(const Character& other);
+	Character &operator=(const Character& other);
+	~Character();
 
+	void	equip(AMateria* materia);
+	void	unequip(unsigned int i);
 };
