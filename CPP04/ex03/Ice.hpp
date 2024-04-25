@@ -10,6 +10,6 @@ public:
 	Ice &operator=(const Ice& other);
 	~Ice();
 
-	Ice*				clone() const;
-	void				use(ICharacter &target) const;
+	Ice*		clone() const;
+	void			use(ICharacter &target);
 };

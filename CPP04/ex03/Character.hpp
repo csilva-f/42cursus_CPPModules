@@ -1,6 +1,5 @@
 #pragma once
 
-# include <iostream>
 # include "ICharacter.hpp"
 
 class Character: public ICharacter
@@ -16,6 +15,8 @@ public:
 	Character &operator=(const Character& other);
 	~Character();
 
-	void	equip(AMateria* materia);
-	void	unequip(unsigned int i);
+	void				equip(AMateria* m);
+	void				unequip(int idx);
+	void				use(int idx, ICharacter& target);
+	std::string const&	getName() const;
 };

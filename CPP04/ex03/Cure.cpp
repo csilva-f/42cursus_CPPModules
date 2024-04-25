@@ -1,4 +1,5 @@
 #include "Cure.hpp"
+#include "AMateria.hpp"
 
 Cure::Cure(): AMateria("cure")
 {
@@ -7,6 +8,7 @@ Cure::Cure(): AMateria("cure")
 
 Cure::Cure(const Cure& other): AMateria(other)
 {
+	*this = other;
 	std::cout << "Cure copy constructor called\n";
 }
 
@@ -18,12 +20,17 @@ Cure	&Cure::operator=(const Cure& other)
 	return *this;
 }
 
+Cure::~Cure()
+{
+	std::cout << "Cure destructor called\n";
+}
+
 Cure*	Cure::clone() const
 {
 	return new Cure(*this);
 }
 
-void	Cure::use(ICharacter& target) const
+void	Cure::use(ICharacter& target)
 {
 	std::cout << "* heals " << target.getName() << "'s wounds *\n";
 }

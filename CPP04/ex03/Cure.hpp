@@ -10,6 +10,6 @@ public:
 	Cure &operator=(const Cure& other);
 	~Cure();
 
-	Cure*	clone() const;
-	void	use(ICharacter &target) const;
+	Cure*		clone() const;
+	void		use(ICharacter &target);
 };
