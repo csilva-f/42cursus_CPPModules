@@ -1,4 +1,4 @@
-NAME = EasyFind
+NAME = Span
 
 CXX = c++ -fsanitize=address -ggdb
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
@@ -6,7 +6,7 @@ OBJS_FOLDER = objs
 VPATH = srcs/
 RM = rm -rf
 
-SRCS =	main.cpp
+SRCS =	main.cpp Span.cpp
 OBJS = ${SRCS:%.cpp=${OBJS_FOLDER}/%.o}
 
 ${NAME}:	${OBJS_FOLDER} ${OBJS}
