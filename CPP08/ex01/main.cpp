@@ -8,6 +8,7 @@ int main()
 {
 	try
 	{
+		std::cout << "TEST 1: addNumber called several times\n\n";
 		Span	sp = Span(10);
 
 		sp.addNumber(6);
@@ -25,6 +26,7 @@ int main()
 	}
 	try
 	{
+		std::cout << "\nTEST 2: addNumbers with too many numbers\n\n";
 		Span	sp = Span(10);
 
 		sp.addNumber(6);
@@ -52,6 +54,7 @@ int main()
 	}
 	try
 	{
+		std::cout << "\nTEST 3: addNumbers successfully called\n\n";
 		Span	sp = Span(10);
 
 		sp.addNumber(6);

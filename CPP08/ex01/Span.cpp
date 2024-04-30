@@ -47,6 +47,7 @@ void	Span::addNumbers(std::vector<int>::const_iterator a, std::vector<int>::cons
 	this->_vec.insert(this->_vec.end(), a, b);
 	// insert(): receives the position of the iterator in which we want to insert the elements,
 	// the input interator first and the input iterator last
+	std::cout << "Batch pf numbers successfully added to the container through addNumbers function\n";
 }
 
 int		Span::shortestSpan() const
