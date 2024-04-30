@@ -1,5 +1,4 @@
-#include "easyfind.hpp"
-#include <limits>
+#include "PmergeMe.hpp"
 
 bool isNumber(const std::string& str)
 {
@@ -7,7 +6,7 @@ bool isNumber(const std::string& str)
 
     for (size_t i = 0; i < str.length(); ++i)
 	{
-		if ((i == 0 && str[i] == '-') || (i >= 0 && isdigit(str[i])) || str[i] == '.')
+		if ((i == 0 && str[i] == '-') || (i >= 0 && isdigit(str[i])) || (i == 0 && str[i] == '+'))
 			continue;
 		else
             return false;
@@ -15,49 +14,64 @@ bool isNumber(const std::string& str)
     return true;
 }
 
+int	checkInput(char *argv, std::vector<int> i_numbers)
+{
+	char	*p;
+	double	n = strtod(argv, &p);
+
+	if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+	{
+		std::cout << "Error: one or more values introduced are out of bounds\n";
+		return -1;
+	}
+	if (n == 0 && isNumber(argv) == false)
+	{
+		std::cout << "Error: one or more values introduced are not numbers\n";
+		return -1;
+	}
+	if (n < 1 || isNumber(argv) == false)
+	{
+	   	std::cout << "Error: one or more values introduced are not positive integers\n";
+		return -1;
+	}
+	for (std::vector<int>::iterator it = i_numbers.begin(); it != i_numbers.end(); ++it)
+	{
+		if (*it == n)
+		{
+			std::cout << "Error: one or more values introduced are duplicated\n";
+			return -1;
+		}
+    }
+	return n;
+}
+
 int main(int argc, char **argv)
 {
-	if (argc == 2)
+	if (argc > 1)
 	{
-		char	*p;
-		double	n = strtod(argv[1], &p);
-		if (n > std::numeric_limits<int>::max() || n < std::numeric_limits<int>::min())
+		std::vector<int> i_numbers;
+		for (int i = 1; i < argc; i++)
 		{
-			std::cout << "Error: value introduced out of bounds\n";
-			return 0;
+			if (checkInput(argv[i], i_numbers) > 0)
+				i_numbers.push_back(checkInput(argv[i], i_numbers));
 		}
-		if (n == 0 && isNumber(argv[1]) == false)
-        {
-			std::cout << "The string does not represent a number.\n";
-			return 0;
-		}
-		std::vector<int> cont;
-		// push_back(value): pushes elements into a vector from the back; inserts at the end
-		cont.push_back(0);
-		cont.push_back(1);
-		cont.push_back(1);
-		cont.push_back(2);
-		cont.push_back(3);
-		cont.push_back(5);
-		cont.push_back(8);
-		cont.push_back(13);
-		cont.push_back(21);
-		cont.push_back(34);
-		cont.push_back(89);
-		cont.push_back(144);
-		try
-		{
-			std::vector<int>::iterator iter = easyfind(cont, (int)n);
-			std::cout << "Value " << (int)n << " found in position "
-				<< std::distance(cont.begin(), iter) << "\n";
-			// distance(iterator first, iterator last): number of elements between 2 iterators
-		}
-		catch (const std::exception& e)
-		{
-			std::cerr << "Error: value not found\n";
-		}
+		std::cout << "Before:";
+		for (int i = 1; i < argc; i++)
+			std::cout << " " << argv[i];
+		std::cout << "\n-------------------------------\n";
+		PmergeMe	pm(i_numbers);
+		pm.pmergeMeVector();
+		std::cout << "\n-------------------------------\n";
+		pm.pmergeMeList();
+		/*std::cout << "Vector\n";
+		pm.printContainer(pm._vec);
+		std::cout << "List\n";
+		pm.printContainer(pm._list);*/
 	}
 	else
-		std::cout << "Error: wrong number of arguments\n";
+	{
+		std::cout << "Error: you must specify a collection of numbers to start the algorithm\n";
+		return 2;
+	}
 	return 0;
 }
