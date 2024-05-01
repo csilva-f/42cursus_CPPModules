@@ -6,6 +6,7 @@
 # include <vector>
 # include <algorithm>
 # include <utility>
+# include <iterator>
 
 typedef std::vector<std::pair<int, int> >	vectorPair;
 typedef	std::list<std::pair<int, int> >		listPair;
@@ -14,7 +15,9 @@ class PmergeMe
 {
 public:
 	std::vector<int>	_vec;
+	std::vector<int>	_fvec;
 	std::list<int>		_list;
+	std::list<int>		_flist;
 
 	PmergeMe();
 	PmergeMe(std::vector<int> vec);
