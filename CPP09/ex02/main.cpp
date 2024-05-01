@@ -58,10 +58,8 @@ int main(int argc, char **argv)
 		std::cout << "Before:";
 		for (int i = 1; i < argc; i++)
 			std::cout << " " << argv[i];
-		std::cout << "\n-------------------------------\n";
 		PmergeMe	pm(i_numbers);
 		pm.pmergeMeVector();
-		std::cout << "\n-------------------------------\n";
 		pm.pmergeMeList();
 		/*std::cout << "Vector\n";
 		pm.printContainer(pm._vec);

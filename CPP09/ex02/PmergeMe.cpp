@@ -32,7 +32,24 @@ static void	vPairwiseComparison(std::vector<int> vec, vectorPair& pairs)
     	std::pair<int, int>& pair = *it;
 		if (pair.first < pair.second)
 			std::swap(pair.first, pair.second);
-    	std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+    	//std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+	}
+}
+
+static void	vRecursion(vectorPair& pairs)
+{
+	if (pairs.size() < 2)
+		return;
+	vectorPair::iterator	last = pairs.end() - 1;
+	std::pair<int, int>		tmp = *last;
+	vectorPair::iterator	insert_pos = pairs.begin();
+	while (insert_pos != last && insert_pos->first <= last->first)
+		++insert_pos;
+	if (insert_pos != last)
+	{
+		pairs.erase(last);
+		pairs.insert(insert_pos, tmp);
+		vRecursion(pairs);
 	}
 }
 
@@ -41,10 +58,19 @@ void	PmergeMe::pmergeMeVector()
 	vectorPair	pairs;
 
 	vPairwiseComparison(this->_vec, pairs);
+	vRecursion(pairs);
+	std::cout << "\n-------------------------------\n ORDERED PAIRS\n";
+	for (vectorPair::iterator it = pairs.begin(); it != pairs.end(); ++it)
+	{
+    	std::pair<int, int>& pair = *it;
+    	std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+	}
 }
 
 static void	lPairwiseComparison(std::list<int> list, listPair& pairs)
 {
+	if (list.size() % 2 != 0)
+        list.pop_back();
 	for (std::list<int>::iterator it = list.begin(); std::distance(it, list.end()); it++)
 		pairs.push_back(std::make_pair(*it, *(++it)));
 	for (listPair::iterator it = pairs.begin(); it != pairs.end(); ++it)
@@ -52,7 +78,23 @@ static void	lPairwiseComparison(std::list<int> list, listPair& pairs)
     	std::pair<int, int>& pair = *it;
 		if (pair.first < pair.second)
 			std::swap(pair.first, pair.second);
-    	std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+    	//std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+	}
+}
+
+static void	lRecursion(listPair& pairs)
+{
+	if (pairs.size() < 2)
+		return;
+	listPair::iterator	last = pairs.end();
+	--last;
+	listPair::iterator	insert_pos = pairs.begin();
+	while (insert_pos != last && insert_pos->first <= last->first)
+		++insert_pos;
+	if (insert_pos != last)
+	{
+		pairs.splice(insert_pos, pairs, last);
+		lRecursion(pairs);
 	}
 }
 
@@ -61,4 +103,11 @@ void	PmergeMe::pmergeMeList()
 	listPair	pairs;
 
 	lPairwiseComparison(this->_list, pairs);
+	lRecursion(pairs);
+	std::cout << "\n-------------------------------\n ORDERED PAIRS\n";
+	for (listPair::iterator it = pairs.begin(); it != pairs.end(); ++it)
+	{
+    	std::pair<int, int>& pair = *it;
+    	std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
+	}
 }
