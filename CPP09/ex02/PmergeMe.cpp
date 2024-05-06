@@ -141,7 +141,7 @@ static bool isListOrdered(const listPair& pairs)
 			vRecursion(pairs, --last);
 }*/
 
-static void	lRecursion(listPair& pairs, listPair::iterator last, int iter = 0)
+static void	lRecursion(listPair& pairs, listPair::iterator last, int rem, int iter = 0)
 {
 	if (pairs.size() < 2)
 		return;
@@ -159,14 +159,16 @@ static void	lRecursion(listPair& pairs, listPair::iterator last, int iter = 0)
     		std::pair<int, int>& pair = *it;
     		std::cout << "(" << pair.first << ", " << pair.second << ")" << std::endl;
 		}
-		//last = pairs.end();
-		//--last;
-		lRecursion(pairs, last, iter + 1);
+		last = pairs.end();
+		last--;
+		for (int i = 0; i < rem; i++)
+			--last;
+		lRecursion(pairs, last, rem, iter + 1);
 	}
 	else if (insert_pos == last && !isListOrdered(pairs))
 	{
 		--last;
-		lRecursion(pairs, last, iter + 1);
+		lRecursion(pairs, last, rem + 1, iter + 1);
 	}
 }
 
@@ -177,7 +179,7 @@ void	PmergeMe::pmergeMeList()
 	lPairwiseComparison(this->_list, pairs);
 	listPair::iterator	last = pairs.end();
 	--last;
-	lRecursion(pairs, last);
+	lRecursion(pairs, last, 0);
 	std::cout << "\n-------------------------------\n ORDERED PAIRS\n";
 	for (listPair::iterator it = pairs.begin(); it != pairs.end(); ++it)
 	{
