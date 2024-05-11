@@ -1,4 +1,6 @@
 #include "PmergeMe.hpp"
+#include <ctime>
+#include <exception>
 
 bool isNumber(const std::string& str)
 {
@@ -49,22 +51,40 @@ int main(int argc, char **argv)
 {
 	if (argc > 1)
 	{
-		std::vector<int> i_numbers;
-		for (int i = 1; i < argc; i++)
+		try
 		{
-			if (checkInput(argv[i], i_numbers) > 0)
-				i_numbers.push_back(checkInput(argv[i], i_numbers));
+			std::vector<int> i_numbers;
+			for (int i = 1; i < argc; i++)
+			{
+				if (checkInput(argv[i], i_numbers) > 0)
+					i_numbers.push_back(checkInput(argv[i], i_numbers));
+			}
+			std::cout << "Before:";
+			for (int i = 1; i < argc; i++)
+				std::cout << " " << argv[i];
+			std::cout << std::endl;
+			PmergeMe	pm(i_numbers);
+			{
+				clock_t	init = clock();
+				pm.pmergeMeVector();
+				clock_t	end = clock();
+				double	delta = (static_cast<double>(end - init) / CLOCKS_PER_SEC) * 1000;
+				std::cout << "Time to process a range of " << argc - 1 << " elements with std::vector : ";
+				std::cout << delta << " us\n";
+			}
+			{
+				clock_t	init = clock();
+				pm.pmergeMeList();
+				clock_t	end = clock();
+				double	delta = (static_cast<double>(end - init) / CLOCKS_PER_SEC) * 1000;
+				std::cout << "Time to process a range of " << argc - 1 << " elements with std::list : ";
+				std::cout << delta << " us\n";
+			}
 		}
-		std::cout << "Before:";
-		for (int i = 1; i < argc; i++)
-			std::cout << " " << argv[i];
-		PmergeMe	pm(i_numbers);
-		pm.pmergeMeVector();
-		pm.pmergeMeList();
-		/*std::cout << "Vector\n";
-		pm.printContainer(pm._vec);
-		std::cout << "List\n";
-		pm.printContainer(pm._list);*/
+		catch (std::exception& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 	else
 	{
