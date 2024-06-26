@@ -17,7 +17,15 @@ public:
 	BitcoinExchange	&operator=(const BitcoinExchange& other);
 	~BitcoinExchange();
 
+	void	getMultipliedRates(std::string filename);
+
 class ErrorDataFileException : public std::exception
+{
+	public:
+		virtual const char* what() const throw();
+};
+
+class ErrorInputFileException : public std::exception
 {
 	public:
 		virtual const char* what() const throw();

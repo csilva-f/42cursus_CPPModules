@@ -58,6 +58,8 @@ int main(int argc, char **argv)
 			{
 				if (checkInput(argv[i], i_numbers) > 0)
 					i_numbers.push_back(checkInput(argv[i], i_numbers));
+				else
+				 return 1;
 			}
 			std::cout << "Before:";
 			for (int i = 1; i < argc; i++)
